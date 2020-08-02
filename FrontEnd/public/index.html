@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OLC2</title>
+
+<script src="./CodeMirror_Sources/lib/codemirror.js"></script>
+<link rel="stylesheet" href="./CodeMirror_Sources/lib/codemirror.css">
+<link rel="stylesheet" href="./CodeMirror_Sources/theme/dracula.css">
+<link rel="stylesheet" href="./CodeMirror_Sources/Styles.css">
+<link rel="stylesheet" href="./CodeMirror_Sources/theme/the-matrix.css">
+<script src="./CodeMirror_Sources/mode/javascript/javascript.js"></script>
+<script src="./CodeMirror_Sources/mode/shell/shell.js"></script>
+
+<script src="./Scripts/ActionFile.js"></script>
+<!--<script src="./Scripts/Tab.js"></script>
+<!-<script> var exports = {}; </script>
+<script src="../Prueba.js"></script>
+<script src="../Perro.js"></script>
+<link rel="stylesheet" href="./Styles//StyleTabs.css">-->
+
+</head>
+<body >
+  <h1 class="TitleBar"> COMPI STUDIO </h1>
+
+<input id="fileInput" type="file" style="display: none;" onchange="Cargar()">
+
+<!-- =========================== CODIGO EL MENU ======================== -->
+
+<header>
+    <nav class="navegacion">
+        <ul class="menu">
+            <li><a href="#">Archivo</a>
+                <ul class="submenu">
+                    <li><a href="#">Nuevo</a></li>
+                    <!--<li><a href="#" onclick="document.getElementById('fileInput').click();">Abrir</a></li>-->
+                    <li><a href="#" onclick="Cargar()">Abrir</a></li>
+                    <li><a href="#" onclick="Guardar()">Guardar</a></li>
+                    <li><a href="#" onclick="SaveDocument()">Guardar Como</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Editar</a>
+                <ul class="submenu">
+                    <li><a href="#" onclick="ClearEditor()">Borrar Editor</a></li>
+                    <li><a href="#" onclick="ClearConsola()">Borrar Consola</a></li>
+                </ul>
+            </li>
+            <li><a href="#" onclick="Compilar()">Compilar</a></li>
+            <li><a href="#" onclick="Optimizar()">Optimizar</a></li>
+            <li><a href="#">Reportes</a>
+                <ul class="submenu">
+                    <li><a href="http://localhost:8080/TablaError" target="_black">Errores</a></li>
+                    <li><a href="http://localhost:8080/TablaSimbolos" target="_black">Tabla Simbolo</a></li>
+                    <li><a href="http://localhost:8080/arbolAlto" target="_black">AST</a></li>
+                    <li><a href="http://localhost:8080/Bitacora" target="_black">Optimizacion</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<!--
+<-- =========================== TABS ======================== --
+<input class="tablink" onclick="openPage('CodigoAlto')"  id="defaultOpen" type="button" value="EDITOR CODIGO ALTO NIVEL">
+<input class="tablink" onclick="openPage('Codigo3D')"  type="button" value="EDITOR CODIGO 3D">
+
+<button class="tablink" onclick="openPage('CodigoAlto')" id="defaultOpen">EDITOR CODIGO ALTO NIVEL</button>
+    <button class="tablink" onclick="openPage('Codigo3D')" >EDITOR CODIGO 3D</button>-->
+
+
+<!-- =========================== CODIGO PARA EL EDITOR ======================== -->
+
+<div id="codeeditor" class="TextEditor"> </div>
+<script>
+    var editorText = CodeMirror(document.getElementById("codeeditor"),
+    {
+        mode: "javascript",
+        theme: "dracula",
+        tabSize: 5,
+        lineNumbers: true
+    });
+
+    editorText.setSize(null,560);
+</script>
+
+<span></span>
+<!-- =========================== CODIGO PARA LA CONSOLA ======================== -->
+<div id="consoleeditor"></div>
+
+<script>
+    var consoleText = CodeMirror(document.getElementById("codeeditor"),
+    {
+        mode: "javascript",
+        theme: "the-matrix",
+        lineNumbers: true,
+        readOnly: true
+    })
+    consoleText.setSize(null,350);
+</script>
+
+
+
+<!--<input type="button" value="Contenido" onclick="Obtener_Texto()"> -->
+
+<script>
+    function Obtener_Texto(){
+        console.log(editorText.getValue())
+        consoleText.setValue(editorText.getValue()+"Probando nada mas")
+    }
+</script>
+</body>
+</html>

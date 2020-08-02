@@ -1,0 +1,138 @@
+INICIO
+	-> DECLARAR_VARIABLES DECLARAR_STACK DECLARAR_HEAP DECLARAR_PUNTEROS DECLARAR_PUNTEROS
+       INSTRUCCIONES EOF				
+;
+
+//===================== DECLARAR VARIABLES =====================
+DECLARAR_VARIABLES->
+                tk_var LISTA_ID ptcoma         
+;
+LISTA_ID-> LISTA_ID coma identificador			
+        | identificador							
+;
+
+//===================== DECLARAR STACK =====================
+DECLARAR_STACK->
+            tk_var tk_stack corizq corder ptcoma    
+;
+//===================== DECLARAR HEAP =====================
+DECLARAR_HEAP->
+            tk_var tk_heap corizq corder ptcoma     
+;
+
+//===================== PUNTEROS =====================
+DECLARAR_PUNTEROS->
+            tk_var identificador equal numero ptcoma 
+;
+
+
+INSTRUCCIONES
+	-> INSTRUCCIONES	INSTRUCCION 	
+	| INSTRUCCION					
+;
+
+INSTRUCCION
+	-> ASIGNACION    			
+    | DESTINO_SALTO                
+    | SALTO_INCONDICIONAL ptcoma    
+    | SALTO_CONDICIONAL ptcoma      
+    | DECLARAR_METODO               
+    | LLAMAR_METODO                 
+    | PRINT		            		
+    | ASIGNAR_HEAP                  
+    | ASIGNAR_STACK                 
+;
+
+PROGRAMA->
+		PROGRAMA PROGRAMA_SENTENCIA		
+	  | PROGRAMA_SENTENCIA			
+;
+
+PROGRAMA_SENTENCIA
+				-> ASIGNACION    			    
+                | DESTINO_SALTO                     
+                | SALTO_INCONDICIONAL ptcoma    
+                | SALTO_CONDICIONAL ptcoma      
+                | LLAMAR_METODO                 
+                | PRINT     				   
+                | ASIGNAR_HEAP                  
+                | ASIGNAR_STACK                 
+;
+
+//===================== ASIGNAR VARIABLES =====================
+ASIGNACION-> identificador equal VALOR OPERACION VALOR ptcoma    
+            | identificador equal VALOR ptcoma			
+            | ASIGNAR_MEMORIA ptcoma                           
+;
+
+ASIGNAR_MEMORIA-> identificador equal tk_stack corizq VALOR corder	
+                | identificador equal tk_heap corizq VALOR corder	
+;
+
+VALOR-> decimal          
+	  | menos decimal   
+      | numero          
+	  | menos numero	
+      | identificador   
+;
+
+//===================== OPERADOR =====================
+OPERACION-> mas                  
+            | menos             
+            | por               
+            | div               
+            | modulo            
+            | RELACIONAL        
+;
+RELACIONAL-> menor_igual         
+            | mayor_igual       
+            | menor             
+            | mayor             
+            | igualacion        
+            | diferencia        
+;
+
+//===================== ASIGNAR STACK =====================
+ASIGNAR_STACK-> tk_stack corizq VALOR corder equal VALOR ptcoma   
+;
+
+//===================== ASIGNAR HEAP =====================
+ASIGNAR_HEAP-> tk_heap corizq VALOR corder equal VALOR ptcoma 
+;
+
+
+//===================== DESTINO SALTO =====================
+DESTINO_SALTO-> etiqueta dospts          		
+;
+
+//===================== SALTO INCONDICIONAL =====================
+SALTO_INCONDICIONAL-> tk_goto etiqueta 	
+;
+
+//===================== SALTO CONDICIONAL =====================
+SALTO_CONDICIONAL-> tk_if para VALOR RELACIONAL VALOR parc tk_goto etiqueta
+;
+
+//===================== DECLARACION DE METODOS =====================
+DECLARAR_METODO-> tk_proc identificador tk_begin PROGRAMA tk_end
+;
+
+//===================== LLAMAR METODOS =====================
+LLAMAR_METODO-> tk_call identificador ptcoma			
+;
+
+//===================== SENTENCIA PRINT =====================
+PRINT-> tk_print para pInt coma VALOR  parc ptcoma			
+        | tk_print para pDouble coma VALOR  parc ptcoma		
+        | tk_print para pChar coma VALOR  parc ptcoma		
+;
+
+
+
+
+
+
+
+
+
+

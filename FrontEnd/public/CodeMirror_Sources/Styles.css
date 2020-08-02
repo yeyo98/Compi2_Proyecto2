@@ -1,0 +1,89 @@
+body{
+    background-color:#4682B4;
+}
+
+body{
+	background: #313D52;
+}
+
+.TitleBar{
+    background-color: #40E0D0;
+    text-align: center;
+	padding: 1%;
+	font-family: Arial;
+}
+
+.TextEditor{
+    font-size: 130%;
+}
+
+*{
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+
+
+/* HEADER */
+header{
+    width: 100%;
+    height: 80px;
+}
+
+.navegacion{
+    width: 100%;
+    margin: 10px auto;
+	background: #708090;
+}
+
+.navegacion ul{
+	list-style: none;
+}
+
+/* MENU */
+.menu > li{
+	position: relative;
+	display: inline-block;
+}
+
+.menu > li > a{
+	display: block;
+	padding: 15px 20px;
+	color: #B0E0E6;
+    font-family: 'Rockwell';
+	text-decoration: none;
+}
+
+.menu li a:hover{
+	color: #fff;
+	transition: all .3s;
+}
+
+/* Submenu*/
+
+.submenu{
+	position: absolute;
+	background: #333333;
+	width: 120%;
+	visibility: hidden;
+	opacity: 0;
+    transition: opacity 1.5s;
+    z-index: 100;
+}
+
+.submenu li a{
+	display: block;
+	padding: 15px;
+	color: #fff;
+	font-family: 'Open sans';
+	text-decoration: none;
+}
+.menu li:hover .submenu{
+	visibility: visible;
+	opacity: 1; 
+}
+
+

@@ -1,0 +1,255 @@
+INICIO-> IMPORTACION INSTRUCCIONES
+        | INSTRUCCIONES
+;
+
+INSTRUCCIONES-> INSTRUCCION INSTRUCCIONES
+            |   INSTRUCCION
+;
+
+INSTRUCCION-> DECLARACION
+            | DECLARACION ptcoma
+            | CREAR_FUNCION
+;
+
+
+PROGRAMA:
+	PROGRAMA PROGRAMA_SENTENCIA
+	| PROGRAMA_SENTENCIA
+;
+
+
+PROGRAMA_SENTENCIA->  DECLARACION
+                    | DECLARACION ptcoma
+                    | ASIGNACION
+                    | ASIGNACION ptcoma
+                    | PRINT
+                    | PRINT ptcoma
+                    | AUMENTO
+
+                    | SENTENCIA_IF
+                    | SENTENCIA_SWITCH
+                    | SENTENCIA_WHILE
+                    | SENTENCIA_DOWHILE
+                    | SENTENCIA_FOR
+                    | SENTENCIA_TRANSFERENCIA
+                    | CALL_FUNCION				
+		    | CALL_FUNCION ptcoma    	
+
+
+//===================== IMPORTACION =====================
+IMPORTACION-> tk_import LISTA_ARCHIVO
+                | tk_import LISTA_ARCHIVO ptcoma
+;
+
+LISTA_ARCHIVO-> LISTA_ARCHIVO coma nombre_archivo
+                nombre_archivo
+;
+
+//===================== DECLARACION =====================
+DECLARACION-> TIPOS LISTA_ID equal EXPRESION
+            | tk_var identificador equal2 EXPRESION
+            | tk_const identificador equal2 EXPRESION
+            | tk_global identificador equal2 EXPRESION
+            | TIPOS LISTA_ID
+;
+
+LISTA_ID-> LISTA_ID coma identificador
+        | identificador
+;
+
+TIPOS-> TIPO
+        | TIPO corizq corder
+;
+
+TIPO-> tk_integer
+        | tk_double
+        | tk_char
+        | tk_boolean
+        | identificador
+;
+
+//===================== ASIGNACION =====================
+ASIGNACION-> identificador equal EXPRESION
+            | identificador corder EXPRESION corizq equal EXPRESION
+;
+
+//===================== AUMENTO =====================
+AUMENTO-> identificador incremento
+        | identificador decremento
+
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SENTENCIAS DE CONTROL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//===================== SENTENCIA IF =================
+SENTENCIA_IF-> tk_if para EXPRESION parc llavea PROGRAMA llavec   
+              | tk_if para EXPRESION parc llavea PROGRAMA llavec 
+				tk_else llavea  PROGRAMA llavec
+              | tk_if para EXPRESION parc llavea PROGRAMA llavec 
+				tk_else SENTENCIA_IF       
+                                                                                                   
+;
+//===================== SENTENCIA SWITCH ==================
+SENTENCIA_SWITCH-> tk_switch para EXPRESION parc llavea LIST_CASE llavec 
+;
+
+LIST_CASE-> LIST_CASE SENTENCIA_CASE 
+           | SENTENCIA_CASE               
+;
+
+SENTENCIA_CASE-> tk_case EXPRESION dospts PROGRAMA 
+                | tk_default dospts PROGRAMA    
+;
+
+
+//===================== SENTENCIA WHILE =================
+SENTENCIA_WHILE-> tk_while para EXPRESION parc llavea llavec                       
+                 | tk_while para EXPRESION parc llavea PROGRAMA llavec
+;
+
+//===================== SENTENCIA DO-WHILE =================
+SENTENCIA_DOWHILE->  tk_do llavea llavec tk_while para EXPRESION parc 
+                    | tk_do llavea PROGRAMA llavec tk_while para EXPRESION parc
+;
+
+//===================== SENTENCIA FOR =================
+SENTENCIA_FOR-> tk_for para INICIOFOR ptcoma EXPRESION ptcoma FINALFOR parc llavea PROGRAMA llavec 
+		| tk_for para  ptcoma EXPRESION ptcoma FINALFOR parc llavea PROGRAMA llavec 
+		| tk_for para INICIOFOR ptcoma ptcoma FINALFOR parc llavea PROGRAMA llavec 
+
+		| tk_for para INICIOFOR ptcoma EXPRESION ptcoma parc llavea PROGRAMA llavec 
+		| tk_for para ptcoma ptcoma FINALFOR parc llavea PROGRAMA llavec 
+		| tk_for para INICIOFOR ptcoma ptcoma parc llavea PROGRAMA llavec 
+
+		| tk_for para ptcoma EXPRESION ptcoma parc llavea PROGRAMA llavec 
+		| tk_for para ptcoma ptcoma parc llavea PROGRAMA llavec
+; 
+
+INICIOFOR-> DECLARACION
+        | ASIGNACION
+;
+
+FINALFOR-> ASIGNACION
+         | AUMENTO
+;
+
+//===================== SENTENCIA DE TRANSFERENCIA ==================
+SENTENCIA_TRANSFERENCIA-> tk_break         
+                         | tk_continue      
+                         | tk_return        
+                         | tk_return EXPRESION   
+;
+
+
+
+
+//===================== GRAMATICA PARA IMPRIMIR =================
+PRINT-> print para EXP parc        
+;
+
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% SENTENCIAS PARA LAS FUNCIONES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+//===================== CREACION DE FUNCIONES ==================
+CREAR_FUNCION: TIPOS identificador para parc llavea PROGRAMA llavec
+	        | TIPOS identificador para LISTA_PARAMETROS parc llavea PROGRAMA llavec
+;
+
+LISTA_PARAMETROS: LISTA_PARAMETROS coma TIPOS identificador	
+                | TIPOS identificador							
+;
+VISIBILIDAD-> tk_public
+            | tk_private
+;
+
+//===================== LLAMADAS DE LAS FUNCIONES ==================
+CALL_FUNCION-> identificador para parc
+                |  identificador para LISTA_EXP parc
+;
+
+//===================== EXCEPCIONES ==================
+
+
+//===================== SENTENCIA TRY CATCH ==================
+
+
+//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ESTRUCTURAS DE DATOS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+//===================== STRING ==================
+
+
+//===================== FUNCIONES DE STRING ==================
+
+
+//===================== ARREGLOS ==================
+
+
+//===================== ACCESO DE ARREGLO ==================
+
+
+//===================== FUNCIONES NATIVAS ==================
+
+
+//===================== ESTRUCTURAS ==================
+/*  .
+    .
+    .
+    .
+    .
+    .
+    .
+    .
+    */
+
+
+
+
+
+
+//===================== EXPRESION ==================
+EXPRESION->  EXPRESION xor EXPRESION
+            | EXPRESION op_or EXPRESION
+            | EXPRESION op_and EXPRESION
+            | EXPRESION igualacion EXPRESION
+            | EXPRESION diferencia EXPRESION
+            | EXPRESION igualdad_referencia EXPRESION
+            | EXPRESION mayor EXPRESION
+            | EXPRESION mayor_igual EXPRESION
+            | EXPRESION menor EXPRESION
+            | EXPRESION menor_igual EXPRESION
+            | EXPRESION mas EXPRESION       
+            | EXPRESION menos EXPRESION     
+            | EXPRESION por EXPRESION       
+            | EXPRESION div EXPRESION  	
+            | EXPRESION modulo EXPRESION
+            | EXPRESION potencia EXPRESION
+            | menos EXPRESION %prec Umenos
+            | not EXPRESION %prec Unot
+            | para EXPRESION parc   
+            | para tk_double parc EXPRESION		
+            | para tk_integer parc EXPRESION	
+            | para tk_char parc EXPRESION		    	
+            | VALOR			
+;				
+
+VALOR-> numero
+        | decimal
+        | caracter
+        | cadena
+        | tk_true
+        | tk_false
+        | identificador
+        | identificador incremento
+        | identificador decremento
+	| VALOR_ARRAY
+;
+
+VALOR_ARRAY-> llavea LISTA_EXP llavec		
+;
+
+LISTA_EXP->     LISTA_EXP coma EXPRESION
+		| EXPRESION						
+;
+
+
+
+
+    //"typescript-collections": "^1.3.3"
